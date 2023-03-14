@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/property_view_styles.css') }}">
+
+  <div class="card">
+
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img class="card-img-top" src="{{ url_for('static', filename='uploads/' + property.photo) }}" alt="{{ property.title }}">
+      </div>
+
+      <div class="col-md-8">
+        <div class="card-body">
+          <h1 class="card-title">{{ property.title }}</h1>
+          <div class="row mb-3">
+
+
+            <div class="row mb-3">
+              <div class="col">
+                <button class="btn btn-price btn-primary" disabled>${{ property.price }}</button>
+                <button class="btn btn-property-type btn-warning" disabled>{{ property.property_type }}</button>
+
+              </div>
+              <div class="col">
+                <h5 class="card-text">{{ property.type }}</h5>
+              </div>
+            </div>                      
+            
+            
+
+            <div class="col">
+              <h5 class="card-text">{{ property.type }}</h5>
+            </div>
+          </div>
+          <p class="card-text">{{ property.description }}</p>
+
+          <p class="card-text">{{ property.bedrooms }} bedrooms  {{ property.bathrooms }} bathrooms</p>
+
+          <p class="card-text location">{{ property.location }}</p>
+
+
+
+          
+
+          <a href="#" class="btn btn-primary">Email Realtor</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

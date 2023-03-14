@@ -1,0 +1,88 @@
+body {
+  background-color: #ebebeb;
+}
+
+.form-container {
+  background-color: #fff; 
+  padding: 20px;
+}
+
+.form-heading {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.form-input.description {
+  width: 50%; 
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-col {
+  width: 40%; 
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  
+  background-color: white;
+  color: rgb(99, 99, 99);
+  border: 2px solid rgb(160, 160, 160);
+  padding: 8px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+
+}
+
+#photo-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+#photo-input + label {
+  margin-left: 10px;
+}
+
+
+.form-submit {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.form-submit:hover {
+  background-color: #0062cc;
+}
+  

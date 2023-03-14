@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_property_styles.css') }}" />
+
+    <h1 class="form-heading">Add a New Property</h1>
+
+<div class="form-container">
+    <form method="POST" enctype="multipart/form-data">
+
+      {{ form.csrf_token }}
+
+      <label class="form-label" for="title">Property Title</label>
+      {{ form.title(class_="form-input") }}
+      <label class="form-label" for="description">Description</label>
+      {{ form.description(class_="form-input", rows=5) }}
+
+      <div class="form-row">
+        <div class="form-col">
+          <label class="form-label" for="bedrooms">No. of Rooms</label>
+          {{ form.bedrooms(class_="form-input") }}
+        </div>
+        <div class="form-col">
+          <label class="form-label" for="bathrooms">No. of Bathrooms</label>
+          {{ form.bathrooms(class_="form-input") }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label class="form-label" for="price">Price</label>
+          {{ form.price(class_="form-input") }}
+        </div>
+        <div class="form-col">
+            <label class="form-label" for="property_type">Type</label>
+          {{ form.property_type(class_="form-input") }}
+        </div>
+      </div>
+
+
+    <div class="form-col">
+        <label class="form-label" for="location">Location</label>
+        {{ form.location(class_="form-input") }}
+    </div>
+
+    <div class="form-row">
+      <div class="form-col">
+          <label class="form-label" for="photo">Photo</label>
+          <div class="upload-btn-wrapper">
+              <button class="btn browse-btn">Browse</button>
+              {{ form.photo(class_="form-input", id="photo-input") }}
+          </div>
+      </div>
+  </div>    
+
+    <div class="form-row">
+    <button type="submit" class="form-submit">Add Property</button>
+    </div>
+
+
+  {% endblock %}

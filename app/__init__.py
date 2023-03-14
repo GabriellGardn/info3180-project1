@@ -11,4 +11,4 @@ db = SQLAlchemy(app)
 # Instantiate Flask-Migrate library here
 migrate = Migrate(app, db)
 
-from app import views
+from app import views, models

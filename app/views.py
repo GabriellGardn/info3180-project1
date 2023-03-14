@@ -7,7 +7,7 @@ This file contains the routes for your application.
 
 import os
 from app import app, db
-from flask import render_template, request, redirect, url_for, flash, session, abort, send_from_directory
+from flask import render_template, request, redirect, url_for, flash, session, abort, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from app.models import Property
 from app.forms import NewPropertyForm
@@ -49,40 +49,52 @@ def create_property():
         price = form.price.data
         property_type = form.property_type.data
         description = form.description.data
-
         photo = form.photo.data
+        
 
         photo_filename = None
-        if photo:
-            photo_filename = secure_filename(photo.filename)
-            photo.save(os.path.join(
-                app.config['UPLOAD_FOLDER'], photo_filename
-                ))
+        photo_filename = secure_filename(photo.filename)
+        photo.save(os.path.join(
+            app.config['UPLOAD_FOLDER'], photo_filename
+            ))
+        
+        new_property = Property(title, bedrooms, bathrooms, location, price, property_type, description, photo_filename)
+        db.session.add(new_property)
+        db.session.commit()
+
+        flash('Property successfully added!', 'success')
+        
+        return render_template('properties.html', 
+                               title = title,
+                               location = location,
+                               price = price,
+                               photo = photo_filename)
 
         
 
-        property = Property(title, bedrooms, bathrooms, location, price, property_type, description, photo_filename)
-        db.session.add(property)
-        db.session.commit()
-
-        flash('Property successfully added!')
-
-        return redirect('/properties/')
 
     return render_template('create_property.html', form=form)
 
 
 
 # For displaying a list of all properties in the database.
-#@app.route('/properties', methods=['GET'])
-#def view_all_properties():
+@app.route('/properties', methods=['GET'])
+def view_all_properties():
+
+    all_properties = Property.query.all()
+
+    return render_template('properties.html', properties=all_properties)
 
 
 
 
 # For viewing an individual property by the specific property id. 
-#@app.route('/properties/<propertyid>', methods=['GET'])
-#def view_property(propertyid):
+@app.route('/properties/<propertyid>', methods=['GET'])
+def view_property(propertyid):
+
+    property = Property.query.filter_by(id=propertyid).first()
+
+    return render_template('property_view.html', property=property)
 
 
 
@@ -130,3 +142,28 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
+
+
+
+
+# to get images
+def get_uploaded_images():
+
+    rootdir = os.getcwd()
+    images = []
+    for subdir, dirs, files in os.walk(rootdir + '/uploads'):
+        for file in files:
+            if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png'):
+                images.append(file)
+    return images
+
+@app.route('/')
+def index():
+
+    properties = Property.query.all()
+    images = get_uploaded_images()
+    return render_template('properties.html', properties=properties, images=images)
+
+@app.route('/uploads/<filename>')
+def get_uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
